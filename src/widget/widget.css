@@ -1,0 +1,297 @@
+/*
+ * Styles for the reusable widgets (Button, Input).
+ *
+ * Self-contained: every colour reads the app's design tokens when they exist
+ * (--accent, --error, ...) and falls back to a default otherwise, so the
+ * widgets look right in any app. To theme them, override the --ui-* variables:
+ *
+ *   :root { --ui-accent: #7c3aed; --ui-radius: 8px; }
+ */
+:root {
+  --ui-accent: var(--accent, #245a7e);
+  --ui-accent-strong: var(--accent-strong, #1a4461);
+  --ui-ink: var(--ink, #1b2a33);
+  --ui-ink-muted: var(--ink-muted, #5a6973);
+  --ui-rule: var(--rule, #d3dcdd);
+  --ui-rule-strong: var(--sheet-edge, #9aabb0);
+  --ui-surface: var(--surface, #ffffff);
+  --ui-surface-hover: var(--sidebar, #f2f5f5);
+  --ui-disabled-bg: #f4f6f6;
+  --ui-error: var(--error, #a0281f);
+  --ui-error-strong: #7f1f18;
+  --ui-error-wash: #fbf0ee;
+  --ui-radius: var(--radius, 6px);
+  --ui-font: var(--font, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+}
+
+/* ---------------- Button ---------------- */
+
+.ui-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--ui-radius);
+  font-family: var(--ui-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.ui-button:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 2px;
+}
+
+.ui-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ui-button--sm {
+  padding: 6px 12px;
+  font-size: 0.86rem;
+}
+
+.ui-button--lg {
+  padding: 12px 22px;
+  font-size: 1.05rem;
+}
+
+.ui-button--full {
+  width: 100%;
+}
+
+.ui-button--primary {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent);
+  color: #fff;
+}
+.ui-button--primary:hover:not(:disabled) {
+  background: var(--ui-accent-strong);
+  border-color: var(--ui-accent-strong);
+}
+
+.ui-button--secondary {
+  background: var(--ui-surface);
+  border-color: var(--ui-rule);
+  color: var(--ui-ink);
+}
+.ui-button--secondary:hover:not(:disabled) {
+  background: var(--ui-surface-hover);
+  border-color: var(--ui-rule-strong);
+}
+
+.ui-button--danger {
+  background: var(--ui-error);
+  border-color: var(--ui-error);
+  color: #fff;
+}
+.ui-button--danger:hover:not(:disabled) {
+  background: var(--ui-error-strong);
+  border-color: var(--ui-error-strong);
+}
+
+.ui-button--ghost {
+  background: transparent;
+  color: var(--ui-accent);
+}
+.ui-button--ghost:hover:not(:disabled) {
+  background: var(--ui-surface-hover);
+}
+
+.ui-button--link {
+  padding: 0;
+  background: none;
+  color: var(--ui-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ui-button--link:hover:not(:disabled) {
+  color: var(--ui-accent-strong);
+}
+
+/* While loading, the label keeps its width (no layout jump) and the spinner sits on top */
+.ui-button--loading {
+  cursor: progress;
+}
+.ui-button--loading .ui-button__content {
+  visibility: hidden;
+}
+.ui-button__spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.ui-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui-button__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.ui-spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ui-spin 700ms linear infinite;
+}
+
+@keyframes ui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-spinner {
+    animation-duration: 2s;
+  }
+}
+
+/* ---------------- Input ---------------- */
+
+.ui-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--ui-font);
+  color: var(--ui-ink);
+}
+
+.ui-field--full {
+  width: 100%;
+}
+
+.ui-field__label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.ui-field__required {
+  margin-left: 2px;
+  color: var(--ui-error);
+}
+
+.ui-field__control {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ui-rule);
+  border-radius: var(--ui-radius);
+  background: var(--ui-surface);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.ui-field__control:hover {
+  border-color: var(--ui-rule-strong);
+}
+
+.ui-field__control:focus-within {
+  border-color: var(--ui-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-accent) 20%, transparent);
+}
+
+.ui-field--invalid .ui-field__control {
+  border-color: var(--ui-error);
+}
+.ui-field--invalid .ui-field__control:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-error) 20%, transparent);
+}
+
+.ui-field--disabled .ui-field__control {
+  background: var(--ui-disabled-bg);
+  cursor: not-allowed;
+}
+
+.ui-field__input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 11px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 0.95rem;
+  color: inherit;
+  outline: none;
+}
+
+.ui-field__input::placeholder {
+  color: var(--ui-ink-muted);
+  opacity: 0.8;
+}
+
+.ui-field__input:disabled {
+  cursor: not-allowed;
+}
+
+.ui-field--sm .ui-field__input {
+  padding: 6px 9px;
+  font-size: 0.86rem;
+}
+
+.ui-field--lg .ui-field__input {
+  padding: 12px 14px;
+  font-size: 1.05rem;
+}
+
+.ui-field__adornment {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--ui-ink-muted);
+}
+.ui-field__adornment--start {
+  padding-right: 0;
+}
+.ui-field__adornment--end {
+  padding-left: 0;
+}
+
+.ui-field__toggle {
+  margin-right: 6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: calc(var(--ui-radius) - 2px);
+  background: none;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ui-accent);
+  cursor: pointer;
+}
+.ui-field__toggle:hover {
+  background: var(--ui-surface-hover);
+}
+.ui-field__toggle:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 0;
+}
+
+.ui-field__hint,
+.ui-field__error {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.ui-field__hint {
+  color: var(--ui-ink-muted);
+}
+
+.ui-field__error {
+  color: var(--ui-error);
+  font-weight: 500;
+}
