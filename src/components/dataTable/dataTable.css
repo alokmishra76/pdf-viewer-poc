@@ -1,0 +1,473 @@
+/*
+ * Data table styles. Reads the app's tokens when present and falls back to
+ * defaults, like the widgets do. Override the --dt-* variables to theme it.
+ */
+.dt {
+  --dt-accent: var(--accent, #245a7e);
+  --dt-accent-wash: var(--accent-wash, #e4edf3);
+  --dt-ink: var(--ink, #1b2a33);
+  --dt-ink-muted: var(--ink-muted, #5a6973);
+  --dt-rule: var(--rule, #d3dcdd);
+  --dt-surface: var(--surface, #ffffff);
+  --dt-header-bg: var(--sidebar, #f2f5f5);
+  --dt-error: var(--error, #a0281f);
+  --dt-radius: var(--radius, 6px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--dt-ink);
+  font-size: 0.93rem;
+}
+
+.dt__visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Small inputs used inside the table, filters and bulk bar */
+.dt-input {
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+  font: inherit;
+  font-size: 0.88rem;
+  color: inherit;
+}
+.dt-input:focus {
+  outline: 2px solid var(--dt-accent);
+  outline-offset: -1px;
+  border-color: var(--dt-accent);
+}
+
+/* ---------------- Toolbar ---------------- */
+
+.dt-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dt-toolbar__search {
+  flex: 1;
+  max-width: 360px;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+  font: inherit;
+}
+.dt-toolbar__search:focus {
+  outline: 2px solid var(--dt-accent);
+  outline-offset: -1px;
+}
+
+.dt-toolbar__columns {
+  margin-left: auto;
+}
+
+.dt-chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 150ms ease;
+}
+.dt-chevron--open {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+/* ---------------- Column config panel ---------------- */
+
+.dt-columns {
+  padding: 12px;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+}
+
+.dt-columns__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--dt-ink-muted);
+  font-size: 0.85rem;
+}
+
+.dt-columns__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dt-columns__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+  cursor: grab;
+}
+.dt-columns__item--dragging {
+  opacity: 0.4;
+}
+.dt-columns__item--over {
+  border-color: var(--dt-accent);
+  background: var(--dt-accent-wash);
+}
+
+.dt-columns__handle {
+  color: var(--dt-ink-muted);
+  letter-spacing: -2px;
+  user-select: none;
+}
+
+.dt-columns__label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.dt-columns__move button {
+  padding: 0 5px;
+  border: 0;
+  background: none;
+  color: var(--dt-ink-muted);
+  cursor: pointer;
+}
+.dt-columns__move button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ---------------- Filter chips ---------------- */
+
+.dt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.dt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 4px 3px 10px;
+  border: 1px solid color-mix(in srgb, var(--dt-accent) 30%, transparent);
+  border-radius: 999px;
+  background: var(--dt-accent-wash);
+  font-size: 0.84rem;
+}
+
+.dt-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--dt-ink-muted);
+  cursor: pointer;
+}
+.dt-chip__remove:hover {
+  background: color-mix(in srgb, var(--dt-accent) 15%, transparent);
+  color: var(--dt-ink);
+}
+
+/* ---------------- Bulk update bar ---------------- */
+
+.dt-bulk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--dt-accent) 30%, transparent);
+  border-radius: var(--dt-radius);
+  background: var(--dt-accent-wash);
+}
+
+.dt-bulk__count {
+  margin-right: 8px;
+}
+
+.dt-bulk__label {
+  color: var(--dt-ink-muted);
+}
+
+.dt-bulk__error {
+  color: var(--dt-error);
+}
+
+/* ---------------- Table ---------------- */
+
+.dt__scroll {
+  position: relative;
+  overflow-x: auto;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+}
+
+.dt__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dt__table th,
+.dt__table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--dt-rule);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dt__table th {
+  background: var(--dt-header-bg);
+  font-size: 0.84rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dt__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dt__table tbody tr:hover {
+  background: color-mix(in srgb, var(--dt-header-bg) 60%, transparent);
+}
+
+.dt__row--selected,
+.dt__table tbody tr.dt__row--selected:hover {
+  background: var(--dt-accent-wash);
+}
+
+.dt__row--editing td {
+  background: #fffbea;
+}
+
+.dt__select {
+  width: 40px;
+}
+
+.dt__actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.dt__th {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dt__th--right {
+  justify-content: flex-end;
+}
+
+.dt__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.dt__sort:hover {
+  color: var(--dt-accent);
+}
+
+/* Up/down arrows: both faint when unsorted, one dark when sorted */
+.dt__sort-icon {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dt__sort-icon::before,
+.dt__sort-icon::after {
+  content: '';
+  border: 4px solid transparent;
+  opacity: 0.3;
+}
+.dt__sort-icon::before {
+  border-bottom-color: currentColor;
+  border-top-width: 0;
+}
+.dt__sort-icon::after {
+  border-top-color: currentColor;
+  border-bottom-width: 0;
+}
+.dt__sort-icon--asc::before,
+.dt__sort-icon--desc::after {
+  opacity: 1;
+  color: var(--dt-accent);
+}
+
+.dt__message {
+  padding: 32px 12px !important;
+  text-align: center !important;
+  color: var(--dt-ink-muted);
+}
+.dt__message--error {
+  color: var(--dt-error);
+}
+
+.dt__row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dt__row-error {
+  color: var(--dt-error);
+  font-size: 0.82rem;
+  white-space: normal;
+}
+
+/* Keeps the old rows visible (dimmed) while the next page loads */
+.dt--loading .dt__table tbody {
+  opacity: 0.55;
+}
+.dt__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dt-accent);
+  font-size: 1.4rem;
+  pointer-events: none;
+}
+
+/* ---------------- Column filter popup ---------------- */
+
+.dt-filter {
+  position: relative;
+  display: inline-flex;
+}
+
+.dt-filter__button {
+  display: inline-flex;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--dt-ink-muted);
+  opacity: 0.6;
+  cursor: pointer;
+}
+.dt-filter__button:hover {
+  background: color-mix(in srgb, var(--dt-accent) 12%, transparent);
+  opacity: 1;
+}
+.dt-filter__button--active {
+  color: var(--dt-accent);
+  opacity: 1;
+}
+
+.dt-filter__popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+  padding: 12px;
+  border: 1px solid var(--dt-rule);
+  border-radius: var(--dt-radius);
+  background: var(--dt-surface);
+  box-shadow: 0 8px 24px rgb(27 42 51 / 14%);
+  font-weight: 400;
+  white-space: normal;
+}
+
+.dt-filter__title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dt-ink-muted);
+}
+
+.dt-filter__options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.dt-filter__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.dt-filter__range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dt-filter__range .dt-input {
+  width: 110px;
+}
+
+.dt-filter__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* ---------------- Pager ---------------- */
+
+.dt-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  color: var(--dt-ink-muted);
+  font-size: 0.88rem;
+}
+
+.dt-pager__size {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dt-pager__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.dt-pager__page {
+  color: var(--dt-ink);
+}
