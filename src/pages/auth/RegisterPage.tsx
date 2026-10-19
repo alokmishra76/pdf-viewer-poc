@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { useAuth } from '../../auth/authContext';
+import { register } from '../../auth/authSlice';
+import { useAppDispatch } from '../../store/hooks';
 import { Button, Input } from '../../widget';
 import { AuthLayout } from './AuthLayout';
 import { describeAuthError } from './authErrors';
@@ -36,7 +37,7 @@ function validate(form: RegisterForm): Record<string, string> {
 }
 
 export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
-  const { register } = useAuth();
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState<RegisterForm>({ name: '', email: '', password: '', confirmPassword: '' });
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -57,7 +58,7 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
     setSubmitting(true);
     try {
       // Registering also signs in, so the AuthGate moves straight on to the app
-      await register({ name: form.name.trim(), email: form.email.trim(), password: form.password });
+      await dispatch(register({ name: form.name.trim(), email: form.email.trim(), password: form.password })).unwrap();
     } catch (err) {
       const described = describeAuthError(err);
       setFormError(described.formError);

@@ -1,16 +1,14 @@
-import { AuthGate, AuthProvider } from './auth';
+import { AuthGate } from './auth';
 import { UserBar } from './components/UserBar';
 
 /**
  * App shell. Signed-out users see the login / register pages (AuthGate);
- * signed-in users see the app.
+ * signed-in users see the app. The Redux store is provided in main.tsx.
  */
 export default function App() {
   return (
-    <AuthProvider>
-      <AuthGate>
-        <UserBar />
-      </AuthGate>
-    </AuthProvider>
+    <AuthGate>
+      <UserBar />
+    </AuthGate>
   );
 }

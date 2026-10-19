@@ -1,8 +1,13 @@
-import { AuthError } from '../../api/auth';
+import type { AuthErrorPayload } from '../../auth/authSlice';
+
+/** True for the rejected value of the login / register thunks (after .unwrap()). */
+function isAuthErrorPayload(err: unknown): err is AuthErrorPayload {
+  return typeof err === 'object' && err !== null && 'code' in err && 'fieldErrors' in err;
+}
 
 /** Splits an error from login/register into a message for the top of the form and per-field messages. */
 export function describeAuthError(err: unknown): { formError: string | null; fieldErrors: Record<string, string> } {
-  if (!(err instanceof AuthError)) {
+  if (!isAuthErrorPayload(err)) {
     return { formError: 'Something went wrong. Please try again.', fieldErrors: {} };
   }
   switch (err.code) {

@@ -1,4 +1,16 @@
-export { AuthProvider } from './AuthProvider';
 export { AuthGate } from './AuthGate';
-export { useAuth } from './authContext';
-export type { AuthContextValue, AuthStatus } from './authContext';
+export { useSessionKeeper } from './useSessionKeeper';
+export {
+  login,
+  logout,
+  register,
+  renewSession,
+  restoreSession,
+  sessionEnded,
+  selectAccessToken,
+  selectAccessTokenExpiresAt,
+  selectAuthStatus,
+  selectCurrentUser,
+  selectIsSignedIn,
+} from './authSlice';
+export type { AuthErrorPayload, AuthState, AuthStatus } from './authSlice';

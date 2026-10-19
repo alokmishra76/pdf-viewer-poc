@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
-import { useAuth } from '../../auth/authContext';
+import { login } from '../../auth/authSlice';
+import { useAppDispatch } from '../../store/hooks';
 import { Button, Input } from '../../widget';
 import { AuthLayout } from './AuthLayout';
 import { describeAuthError } from './authErrors';
@@ -11,7 +12,7 @@ interface LoginPageProps {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -36,8 +37,9 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
 
     setSubmitting(true);
     try {
-      // On success the AuthGate swaps this page for the app; nothing else to do here
-      await login({ email: email.trim(), password });
+      // On success the store switches to signedIn and AuthGate swaps this page for the app.
+      // unwrap() turns a rejected thunk back into a thrown error, so the catch below runs.
+      await dispatch(login({ email: email.trim(), password })).unwrap();
     } catch (err) {
       const described = describeAuthError(err);
       setFormError(described.formError);

@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { useAuth } from '../auth/authContext';
+import { logout, selectCurrentUser } from '../auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Button } from '../widget';
+import DataTable from './dataTable';
 
 /** Thin bar at the top of the signed-in app: who is signed in, and a sign-out button. */
 export function UserBar() {
-  const { user, logout } = useAuth();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectCurrentUser);
   const [signingOut, setSigningOut] = useState(false);
   if (!user) return null;
 
@@ -18,13 +21,14 @@ export function UserBar() {
         size="sm"
         loading={signingOut}
         loadingLabel="Signing out"
-        onClick={async () => {
+        onClick={() => {
           setSigningOut(true);
-          await logout();
+          dispatch(logout());
         }}
       >
         Sign out
       </Button>
+      <DataTable />
     </div>
   );
 }

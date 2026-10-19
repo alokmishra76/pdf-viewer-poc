@@ -1,7 +1,9 @@
 import { useState, type ReactNode } from 'react';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
-import { useAuth } from './authContext';
+import { useAppSelector } from '../store/hooks';
+import { selectAuthStatus } from './authSlice';
+import { useSessionKeeper } from './useSessionKeeper';
 
 type AuthView = 'login' | 'register';
 
@@ -14,15 +16,15 @@ interface AuthGateProps {
 
 /**
  * Shows `children` to signed-in users, and the login or register page to everyone else.
+ * Needs the Redux <Provider store={store}> above it (see main.tsx).
  *
- *   <AuthProvider>
- *     <AuthGate>
- *       <ProtectedApp />
- *     </AuthGate>
- *   </AuthProvider>
+ *   <AuthGate>
+ *     <ProtectedApp />
+ *   </AuthGate>
  */
 export function AuthGate({ children, initialView = 'login' }: AuthGateProps) {
-  const { status } = useAuth();
+  useSessionKeeper();
+  const status = useAppSelector(selectAuthStatus);
   const [view, setView] = useState<AuthView>(initialView);
 
   if (status === 'checking') {
