@@ -1,0 +1,236 @@
+/* Projects page: layout, carousel cards, and the badges / progress bars used in the table */
+
+.projects-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px clamp(16px, 4vw, 48px) 48px;
+}
+
+.projects-page__header h1 {
+  font-size: clamp(1.6rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.projects-page__table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  margin-top: 2px;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------------- Carousel ---------------- */
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.carousel__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.carousel__arrows {
+  display: flex;
+  gap: 6px;
+}
+
+.carousel__arrows .ui-button {
+  min-width: 36px;
+  font-size: 1.1rem;
+}
+
+.carousel__track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: opacity 150ms ease;
+}
+
+.carousel__track--loading {
+  opacity: 0.6;
+}
+
+.carousel__error {
+  padding: 16px;
+  border: 1px solid #e3c4c0;
+  border-radius: var(--radius);
+  background: #fbf0ee;
+  color: var(--error);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 190px;
+  padding: 16px;
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.project-card--skeleton {
+  border-top-color: var(--rule);
+  background: linear-gradient(90deg, var(--surface) 0%, var(--sidebar) 50%, var(--surface) 100%);
+  background-size: 200% 100%;
+  animation: card-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes card-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card--skeleton {
+    animation: none;
+  }
+}
+
+.project-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-card__code {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.project-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.project-card__client {
+  color: var(--ink-muted);
+  font-size: 0.86rem;
+}
+
+.project-card__progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.project-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.project-card__stats dt {
+  color: var(--ink-muted);
+}
+
+.project-card__stats dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.project-card__stats .is-overdue {
+  color: var(--error);
+}
+
+/* ---------------- Table cells ---------------- */
+
+.project-name {
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge--status-planning { background: #eef1ff; color: #3b4bb8; }
+.badge--status-active { background: #e3f0e8; color: #2d6f4e; }
+.badge--status-on_hold { background: #fff4dc; color: #8a5a00; }
+.badge--status-completed { background: #e4edf3; color: #1a4461; }
+.badge--status-cancelled { background: #f1f1f1; color: #5a6973; }
+
+.badge--priority-low { background: #f1f4f4; color: #5a6973; }
+.badge--priority-medium { background: #e4edf3; color: #245a7e; }
+.badge--priority-high { background: #fff0e0; color: #9a4b00; }
+.badge--priority-critical { background: #fbe9e7; color: #a0281f; }
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress__track {
+  position: relative;
+  flex: 1;
+  min-width: 60px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--rule);
+}
+
+.progress__bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.progress__value {
+  min-width: 36px;
+  font-size: 0.84rem;
+  text-align: right;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  padding: 1px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--sidebar);
+  font-size: 0.78rem;
+}

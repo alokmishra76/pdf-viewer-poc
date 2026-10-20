@@ -1,5 +1,6 @@
 import { AuthGate } from './auth';
 import { UserBar } from './components/UserBar';
+import { ProjectsPage } from './pages/ProjectsPage';
 
 /**
  * App shell. Signed-out users see the login / register pages (AuthGate);
@@ -9,6 +10,7 @@ export default function App() {
   return (
     <AuthGate>
       <UserBar />
+      <ProjectsPage />
     </AuthGate>
   );
 }
