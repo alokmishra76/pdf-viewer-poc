@@ -106,8 +106,10 @@ export function DataTable<Row>({
     if (!editing || !onRowUpdate) return;
     // Send only the fields that actually changed
     const changes: RowChanges = {};
-    for (const [field, value] of Object.entries(editing.draft)) {
-      if (value !== (row as Record<string, unknown>)[field]) changes[field] = value;
+    for (const column of config.columns) {
+      if (!column.editor) continue;
+      const field = fieldOf(column);
+      if (editing.draft[field] !== cellValue(row, column)) changes[field] = editing.draft[field];
     }
     if (Object.keys(changes).length === 0) return cancelEdit();
 

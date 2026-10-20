@@ -5,6 +5,7 @@
  */
 export { DataTable, DataTable as default } from './DataTable';
 export { createInitialTableState, isFilterEmpty, nextSort, visibleColumns } from './tableUtils';
+export { applyClientTableState } from './clientTable';
 export type {
   CellEditorConfig,
   ColumnFilterConfig,

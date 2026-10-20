@@ -4,6 +4,8 @@
  */
 import type { Project, ProjectFilterOptions } from '../api/projects';
 import type { SelectOption, TableConfig } from '../components/dataTable';
+import { Link } from '../router/Link';
+import { routes } from '../router/router';
 import { formatDate, formatMoney, PRIORITY_LABELS, STATUS_LABELS } from './projectFormat';
 
 const toOptions = (labels: Record<string, string>): SelectOption[] =>
@@ -29,7 +31,17 @@ export function buildProjectTableConfig(options: ProjectFilterOptions | null): T
     searchPlaceholder: 'Search by name, code, client or description…',
     emptyMessage: 'No projects match your search and filters.',
     columns: [
-      { id: 'code', header: 'Code', sortable: true, width: 100 },
+      {
+        id: 'code',
+        header: 'Code',
+        sortable: true,
+        width: 100,
+        render: (p) => (
+          <Link to={routes.outreach(p.code)} className="project-code-link" title={`Open outreach for ${p.name}`}>
+            {p.code}
+          </Link>
+        ),
+      },
       {
         id: 'name',
         header: 'Name',

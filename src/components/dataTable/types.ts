@@ -32,6 +32,12 @@ export interface TableColumn<Row> {
   header: string;
   /** Property of the row holding this column's value. Default: same as `id`. */
   field?: keyof Row & string;
+  /**
+   * The column's value when it isn't a plain property, e.g. (row) => row.assignee.id.
+   * Used for editing, and for client-side sorting / filtering (applyClientTableState).
+   * Default: row[field].
+   */
+  value?: (row: Row) => unknown;
   /** Custom cell content. Default: the field value as text. */
   render?: (row: Row) => ReactNode;
   width?: number | string;

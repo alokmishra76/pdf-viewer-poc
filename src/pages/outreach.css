@@ -1,0 +1,169 @@
+/* Outreach page (reuses .projects-page layout and badges from projects.css) */
+
+.outreach-page {
+  gap: 20px;
+}
+
+.outreach-page__back {
+  align-self: flex-start;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.outreach-page__back:hover {
+  text-decoration: underline;
+}
+
+.outreach-page__code {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.outreach-page__header h1,
+.outreach-page__message h1 {
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.outreach-page__header .section-subtitle {
+  margin-top: 6px;
+}
+
+.outreach-page__message {
+  padding: 32px 0;
+}
+
+.outreach-page__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.outreach-page__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.outreach-page__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.outreach-page__group-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+}
+
+.outreach-page__empty {
+  padding: 24px;
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius);
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.outreach-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: opacity 150ms ease;
+}
+.outreach-page__list--loading {
+  opacity: 0.7;
+}
+
+/* ---------------- One group ---------------- */
+
+.outreach-group {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.outreach-group__heading {
+  margin: 0;
+}
+
+.outreach-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.outreach-group__toggle:hover {
+  background: var(--sidebar);
+}
+.outreach-group--open .outreach-group__toggle {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.outreach-group__chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 150ms ease;
+}
+.outreach-group--open .outreach-group__chevron {
+  transform: rotate(45deg);
+}
+
+.outreach-group__count {
+  min-width: 26px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.outreach-group__body {
+  padding: 4px 16px 16px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------------- Cells ---------------- */
+
+.outreach-provider {
+  font-weight: 600;
+}
+
+.outreach-notes {
+  display: inline-block;
+  max-width: 320px;
+  color: var(--ink-muted);
+  white-space: normal;
+}
+
+.muted {
+  color: var(--ink-muted);
+}
+
+.badge--outreach-scheduled { background: #eef1ff; color: #3b4bb8; }
+.badge--outreach-in_progress { background: #e4edf3; color: #245a7e; }
+.badge--outreach-awaiting_response { background: #fff4dc; color: #8a5a00; }
+.badge--outreach-completed { background: #e3f0e8; color: #2d6f4e; }
+.badge--outreach-failed { background: #fbe9e7; color: #a0281f; }

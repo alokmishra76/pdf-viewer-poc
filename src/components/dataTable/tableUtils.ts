@@ -55,7 +55,7 @@ export function fieldOf<Row>(column: TableColumn<Row>): string {
 }
 
 export function cellValue<Row>(row: Row, column: TableColumn<Row>): unknown {
-  return (row as Record<string, unknown>)[fieldOf(column)];
+  return column.value ? column.value(row) : (row as Record<string, unknown>)[fieldOf(column)];
 }
 
 /** Default text for a cell with no custom render. */

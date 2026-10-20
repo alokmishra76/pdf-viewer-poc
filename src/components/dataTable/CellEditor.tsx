@@ -44,7 +44,8 @@ export function CellEditor({ editor, value, label, onChange, autoFocus }: CellEd
           type="date"
           aria-label={label}
           autoFocus={autoFocus}
-          value={text}
+          // Accepts "2026-11-03" or a full date-time; the input only shows the day
+          value={text.slice(0, 10)}
           onChange={(e) => onChange(e.target.value)}
         />
       );
